@@ -105,7 +105,7 @@ function main() {
 	//Add the company to the master list (global variable companies_values)
 	companies_values.push(company_value);
 	//Print the company information for level 1
-	document.write("<TR><TD>" + company + "</TD><TD>" + annual_avg_return  + "</TD><TD>" + annual_volatility + "</TD></TR>");
+	document.write("<TR><TD>" + company + "</TD><TD>" + annual_avg_return.toFixed(2) + "%" + "</TD><TD>" + annual_volatility.toFixed(2) + "%" + "</TD></TR>");
     }
     document.write("</table><h1><center>Correlation Factors of All the Companies</center></h1>");
 
@@ -113,7 +113,7 @@ function main() {
     for (company in companies) {
 	document.write("<table width='100%' border='1'><tr><th>Company 1</th><th>Company 2</th><th>Correlation Factor</th></tr>");
     	for(company2 in companies) {
-    	    document.write("<tr><td>" + company + "</td><td>" + company2 + "</td><td>" + correlation(company, company2) + "</td></tr>");
+    	    document.write("<tr><td>" + company + "</td><td>" + company2 + "</td><td>" + correlation(company, company2).toFixed(2) + "</td></tr>");
     	}
 	document.write("</table>");
     }
@@ -130,19 +130,19 @@ function main() {
 
     //P1: 100% Apple, 0% Ford
     document.write("<tr><td>Portfolio 1</td><td>100%</td><td>0%</td>");
-    document.write("<td>" + portfolio_return('AAPL','F',1.0,0.0) + "%</td></tr>");
+    document.write("<td>" + portfolio_return('AAPL','F',1.0,0.0).toFixed(2) + "%</td></tr>");
 
     //P2: 50% Apple, 50% Ford
     document.write("<tr><td>Portfolio 2</td><td>50%</td><td>50%</td>");
-    document.write("<td>" + portfolio_return('AAPL','F',0.5,0.5) + "%</td></tr>");
+    document.write("<td>" + portfolio_return('AAPL','F',0.5,0.5).toFixed(2) + "%</td></tr>");
 
     //P3: 75% Apple, 25% Ford
     document.write("<tr><td>Portfolio 3</td><td>75%</td><td>25%</td>");
-    document.write("<td> " + portfolio_return('AAPL','F',0.75,0.25) + "%</td></tr>");
+    document.write("<td> " + portfolio_return('AAPL','F',0.75,0.25).toFixed(2) + "%</td></tr>");
 
     //P4: 0% Apple, 100% Ford
     document.write("<tr><td>Portfolio 4</td><td>0%</td><td>100%</td>");
-    document.write("<td>" + portfolio_return('AAPL','F',0.0,1.0) + "%</td></tr>");
+    document.write("<td>" + portfolio_return('AAPL','F',0.0,1.0).toFixed(2) + "%</td></tr>");
     document.write("</table><BR>");
     document.write("<BR>");
     document.write("<BR>");
@@ -162,9 +162,9 @@ function main() {
     var ret = return_algorithm();
 
     document.write("<h2>Equally Weighted Portfolio (as reference)</h2>");
-    document.write("Average annual return of portfolio: " + ret + "%");
+    document.write("Average annual return of portfolio: " + ret.toFixed(2) + "%");
     document.write("<BR>");
-    document.write("Annual volatility of portfolio: " + vol + "%");
+    document.write("Annual volatility of portfolio: " + vol.toFixed(2) + "%");
     document.write("<BR>");
     document.write("<BR>");
 
@@ -206,10 +206,10 @@ function main() {
     document.write("<BR>");
     document.write("<BR>");
 
-    document.write("Average annual return of portfolio: <b>" + ret + "%</b>");
+    document.write("Average annual return of portfolio: <b>" + ret.toFixed(2) + "%</b>");
     document.write("<BR>");
     document.write("<BR>");
-    document.write("Annual volatility of portfolio: <b>" + vol + "%</b>");
+    document.write("Annual volatility of portfolio: <b>" + vol.toFixed(2) + "%</b>");
     document.write("<BR>");
     document.write("<BR>");	    
     value_print();
@@ -583,7 +583,7 @@ function value_print(){
     for(var i = 0 ; i < companies_values.length ; i++){
 	document.write("<BR>" + companies_values[i][0]);
 	percent = companies_values[i][8] * 100;
-	document.write("<BR>% of portfolio: " + percent + "%");
+	document.write("<BR>% of portfolio: " + percent.toFixed(2) + "%");
 	document.write("<BR>");
     }
     document.write("<BR>");
