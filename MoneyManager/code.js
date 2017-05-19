@@ -35,9 +35,7 @@ function main() {
     var ticker = firstRow[0];
     var date = firstRow[1];
     var quote = firstRow[2];
-    document.write("Ticker: " + ticker + ", Date: " + date + ", Price: $" + quote + "<BR>");
 
-    
     //Get list of all unique companies in the data
     var companies = {};
     for(var i = 0; i < HISTORICAL_PRICES.length; i++) {
@@ -46,12 +44,15 @@ function main() {
     }
     
     //Print list
-    document.write("LEVEL 1");
+    document.write("<center>LEVEL 1</center>");
     document.write("<BR>");
-    document.write("List of companies: <BR><BR>");
+    document.write("<h1><center>Summary of Returns and Volatilities of All the Companies</h1></center><BR>");
+
+     /*---------------------------------------------------------*/
 
     //Level 1
     //Calculate the values for each formula for each company
+    document.write("<BR><table style='width:100%' border='1'><TR><TH>Company Name</TH><TH>Annual Average Return</TH><TH>Annual Volatility</TH></TR>");
     for(company in companies) {
 	var sum_return_month = 0;
 	var months_count = 0;
@@ -103,70 +104,67 @@ function main() {
 
 	//Add the company to the master list (global variable companies_values)
 	companies_values.push(company_value);
-
 	//Print the company information for level 1
-	document.write("<BR>" + company + ": " + "<BR>" + "Annual Average Return " + annual_avg_return  + "<BR>" + " Annual Volatility " + annual_volatility + "<BR>");
+	document.write("<TR><TD>" + company + "</TD><TD>" + annual_avg_return  + "</TD><TD>" + annual_volatility + "</TD></TR>");
     }
+    document.write("</table><h1><center>Correlation Factors of All the Companies</center></h1>");
 
     //Use the correlation function to calculate correlation factors for all combinations of the companies, print the results for level 1
-    document.write("<BR>");
     for (company in companies) {
+	document.write("<table width='100%' border='1'><tr><th>Company 1</th><th>Company 2</th><th>Correlation Factor</th></tr>");
     	for(company2 in companies) {
-    	    document.write("Correlation of " + company + " and " + company2 + ": " + correlation(company, company2) + "<BR>");
+    	    document.write("<tr><td>" + company + "</td><td>" + company2 + "</td><td>" + correlation(company, company2) + "</td></tr>");
     	}
-	document.write("<BR>");
+	document.write("</table>");
     }
 
     //Level 2
     //Calculate portfolio return
     document.write("<BR>");
     document.write("<BR>");
-    document.write("LEVEL 2");
+    document.write("<center>LEVEL 2</center>");
     document.write("<BR>");
-    document.write("<BR>");
+    document.write("<h1><center>Four Portfolios of Apple and Ford</h1></center>");
+    document.write("<BR><table style='width:100%' border='1'><tr><th>Portfolio</th><th>Weight of Apple</th><th>Weight of Ford</th><th>Return of Portfolio</th></tr>");
+    
 
     //P1: 100% Apple, 0% Ford
-    document.write("Portfolio 1: 100% Apple, 0% Ford <BR>");
-    document.write("Return: " + portfolio_return('AAPL','F',1.0,0.0) + "%");
-    document.write("<BR>");
+    document.write("<tr><td>Portfolio 1</td><td>100%</td><td>0%</td>");
+    document.write("<td>" + portfolio_return('AAPL','F',1.0,0.0) + "%</td></tr>");
 
     //P2: 50% Apple, 50% Ford
-    document.write("Portfolio 2: 50% Apple, 50% Ford <BR>");
-    document.write("Return: " + portfolio_return('AAPL','F',0.5,0.5) + "%");
-    document.write("<BR>");
+    document.write("<tr><td>Portfolio 2</td><td>50%</td><td>50%</td>");
+    document.write("<td>" + portfolio_return('AAPL','F',0.5,0.5) + "%</td></tr>");
 
     //P3: 75% Apple, 25% Ford
-    document.write("Portfolio 3: 75% Apple, 25% Ford <BR>");
-    document.write("Return: " + portfolio_return('AAPL','F',0.75,0.25) + "%");
-    document.write("<BR>");
+    document.write("<tr><td>Portfolio 3</td><td>75%</td><td>25%</td>");
+    document.write("<td> " + portfolio_return('AAPL','F',0.75,0.25) + "%</td></tr>");
 
     //P4: 0% Apple, 100% Ford
-    document.write("Portfolio 4: 0% Apple, 100% Ford <BR>");
-    document.write("Return: " + portfolio_return('AAPL','F',0.0,1.0) + "%");
+    document.write("<tr><td>Portfolio 4</td><td>0%</td><td>100%</td>");
+    document.write("<td>" + portfolio_return('AAPL','F',0.0,1.0) + "%</td></tr>");
+    document.write("</table><BR>");
     document.write("<BR>");
     document.write("<BR>");
-    document.write("<BR>");
+
+     /*---------------------------------------------------------*/
+    
 
     //Level 5
     //Algorithm for finding least risky portfolio for all input companies
-    document.write("LEVEL 5: WEIGHTED AVERAGE PORTFOLIO OF TWENTY COMPANIES");
+    document.write("<center>LEVEL 5</center>");
     document.write("<BR>");
+    document.write("<h1><center>Weighted Average Portfolio of All the Companies</center></h1>");
     document.write("<BR>");
 
     //First, calculate the portfolio with equal weightings as a reference point
     var vol = volatility_algorithm();
     var ret = return_algorithm();
 
-    document.write("Average annual return of portfolio: " + ret);
+    document.write("<h2>Equally Weighted Portfolio (as reference)</h2>");
+    document.write("Average annual return of portfolio: " + ret + "%");
     document.write("<BR>");
-    document.write("Annual volatility of portfolio: " + vol);
-    document.write("<BR>");
-    document.write("<BR>");
-    document.write("<BR>");
-    document.write("Low volatility: " + low_volatility());
-    document.write("<BR>");
-    document.write("<BR>");
-    document.write("High volatility: " + high_volatility());
+    document.write("Annual volatility of portfolio: " + vol + "%");
     document.write("<BR>");
     document.write("<BR>");
 
@@ -199,22 +197,29 @@ function main() {
     for(var i = 0; i < temp_values.length ; i++){
 	companies_values.push(temp_values[i]);
     }
-    
-    document.write("HIGH LOW, LOW RISK CORRELATE PORTFOLIO");
+
+    document.write("<h2>Lowest Risk, Above Required Return Portfolio</h2>");
+    document.write("<h4>HIGH LOW, LOW RISK CORRELATE PORTFOLIO</h4>");
+    document.write("Lowest volatility stock: " + low_volatility());
+    document.write("<BR>");
+    document.write("Highest volatility stock: " + high_volatility());
     document.write("<BR>");
     document.write("<BR>");
-    document.write("Average annual return of portfolio: " + ret);
+
+    document.write("Average annual return of portfolio: <b>" + ret + "%</b>");
     document.write("<BR>");
     document.write("<BR>");
-    document.write("Annual volatility of portfolio: " + vol);
+    document.write("Annual volatility of portfolio: <b>" + vol + "%</b>");
     document.write("<BR>");
     document.write("<BR>");	    
     value_print();
 
-    document.write("<BR>");
-    document.write("LEVEL 4");
-
+    /*---------------------------------------------------------*/
     
+    document.write("<BR>");
+    document.write("<center>LEVEL 4</center>");
+    document.write("<h1><center>All Combinations of Portfolios of Apple and Ford</center></h1>");
+
     var multiple_portfolios = [];
     for (var i = 0; i <= 100; i++) { //each percentage
     	var this_portfolio = [];
@@ -228,15 +233,17 @@ function main() {
     	this_portfolio.push(w_F);
     	multiple_portfolios.push(this_portfolio);
     }
- 
+    
+    //set dimensions of graph
     var margin = {top: 20, right: 20, bottom: 30, left: 50},
 	width = 960 - margin.left - margin.right,
 	height = 500 - margin.top - margin.bottom;
 
-
+    //set the ranges
     var x = d3.scale.linear().range([0, width]);
     var y = d3.scale.linear().range([height, 0]);
 
+    //define axes
     var xAxis = d3.svg.axis()
 	.scale(x)
 	.orient("bottom")
@@ -247,16 +254,19 @@ function main() {
 	.orient("left")
 	.tickFormat(d3.format("%"));
 
+    //define the line
     var line = d3.svg.line()
 	.x(function(d) { return x(d.vola); })
 	.y(function(d) { return y(d.retu); });
 
+    //add the svg canvases
     var svg = d3.select("body").append("svg")
 	.attr("width", width + margin.left + margin.right)
 	.attr("height", height + margin.top + margin.bottom)
 	.append("g")
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    //map data onto variables
     var data = multiple_portfolios.map(function(d) {
 	return {
             vola: d[0],
@@ -265,13 +275,13 @@ function main() {
 	
     });
 
-    console.log(data);
-
+    //scale range of data
     x.domain(d3.extent(data, function(d) { return d.vola; }));
     y.domain(d3.extent(data, function(d) { return d.retu; }));
 
+    //add the x axis
     svg.append("g")
-	.attr("class", "x axis")
+	.attr("class", "x-axis")
 	.attr("transform", "translate(0," + height + ")")
 	.call(xAxis)
 	.append("text")
@@ -279,8 +289,9 @@ function main() {
 	.attr("x", 800)
 	.text("Volatility (%)");
 
+    //add the y axis
     svg.append("g")
-	.attr("class", "y axis")
+	.attr("class", "y-axis")
 	.call(yAxis)
 	.append("text")
 	.attr("transform", "rotate(-90)")
@@ -289,63 +300,24 @@ function main() {
 	.style("text-anchor", "end")
 	.text("Return (%)");
 
+    //add the path
     svg.append("path")
 	.datum(data)
 	.attr("class", "line")
 	.attr("d", line);
 
+     /*---------------------------------------------------------*/
+    
     
     document.write("<BR>");
     document.write("<BR>");
     document.write("<BR>");
-    document.write("LEVEL 3");
-    document.write("<BR>");
-    document.write("<BR>");
-    document.write("<BR>");
-    /*Sumin's code
-    //Level 5 stuff
-    var annual_return_above_12 = [];
-    var company_a = [];
-    var company_b = [];
-    var minimum_volatility = [];
-    for (company in companies) {
-    for (company1 in companies) {
-    var w1 = 0.5;
-    var w2 = 0.5;
-    if (portfolio_return(company, company1, w1, w2) >= 12.0) {
-    annual_return_above_12.push(portfolio_return(company, company1, w1, w2));
-    company_a.push(company);
-    company_b.push(company1);
-    }
-    }
-    }
-    for (var i = 0; i < company_a.length; i++) {
-    var w1 = 0.5;
-    var w2 = 0.5;
-    minimum_volatility.push(portfolio_volatility_2(company_a[i], company_b[i], w1, w2));
-    }
-
-    var min = Math.min.apply(null, minimum_volatility);
-
-    var index = minimum_volatility.indexOf(min);
-
-
-    document.write("Company a: " + company_a[index] + ", Company b: " + company_b[index] + ", Return: " + annual_return_above_12[index] + ", Volatility: " + minimum_volatility[index]);
-
-    document.write("<BR>");
-    document.write(min);
-    document.write("<BR>");
-    document.write(minimum_volatility);
+    document.write("<center>LEVEL 3</center>");
+    document.write("<h1><center>Interactive Portfolio of Apple and Ford</center></h1>");
     document.write("<BR>");
 
-    document.write("<BR>");
-    document.write("List of returns above 12: " + annual_return_above_12);
-    document.write("<BR>");
-    document.write("Company a: " + company_a);
-    document.write("<BR>");
-    document.write("Company b: " + company_b);
-    document.write("<BR>");
-    */
+     /*---------------------------------------------------------*/
+    
     
 }
 
@@ -612,9 +584,6 @@ function value_print(){
 	document.write("<BR>" + companies_values[i][0]);
 	percent = companies_values[i][8] * 100;
 	document.write("<BR>% of portfolio: " + percent + "%");
-	document.write("<BR>Average annual return: " + companies_values[i][5] + "%");
-	document.write("<BR>Annual volatility: " + companies_values[i][6] + "%");
-
 	document.write("<BR>");
     }
     document.write("<BR>");
