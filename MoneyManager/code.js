@@ -188,9 +188,9 @@ function main() {
 	ret = hilo_ret;
 	vol = hilo_vol;
 	prev_values = companies_values;
-	console.log(ret);
-	console.log(vol);
-	console.log(prev_values);
+	// console.log(ret);
+	// console.log(vol);
+	// console.log(prev_values);
 	hilo_ret = hilo_return(low_volatility(), high_volatility());
 	hilo_vol = hilo_algorithm(low_volatility(), high_volatility());	
     }
@@ -220,49 +220,36 @@ function main() {
     	var this_portfolio = [];
     	var w_AAPL = (100 - i) / 100;
     	var w_F = i / 100;
-    	var avg_return = portfolio_return('AAPL', 'F', w_AAPL, w_F);
-    	this_portfolio.push(avg_return);
-    	var ann_volatility = portfolio_volatility_2('AAPL', 'F', w_AAPL, w_F);
+    	var avg_return = portfolio_return('AAPL', 'F', w_AAPL, w_F) / 100;
+    	var ann_volatility = portfolio_volatility_2('AAPL', 'F', w_AAPL, w_F) / 100;
     	this_portfolio.push(ann_volatility);
+    	this_portfolio.push(avg_return);
+    	this_portfolio.push(w_AAPL);
+    	this_portfolio.push(w_F);
     	multiple_portfolios.push(this_portfolio);
     }
-
-    /*
-    var tsv_content = "data:text/csv;charset=utf-8,";
-    multiple_portfolios.forEach(function(infoArray, index) {
-    	data_string = infoArray.join("	");
-    	tsv_content += index < multiple_portfolios ? data_string + "\n" : data_string;
-    });
-    var encodedURI = encodeURI(tsv_content);
-    var link = document.createElement("a");
-    link.setAttribute("href", encodedURI);
-    link.setAttribute("download", "portfolios.tsv");
-    document.body.appendChild(link);
-    link.click();
-    */
  
     var margin = {top: 20, right: 20, bottom: 30, left: 50},
 	width = 960 - margin.left - margin.right,
 	height = 500 - margin.top - margin.bottom;
 
 
-    var x = d3.scale.linear()
-	.range([0, width])
-
-    var y = d3.scale.linear()
-	.range([height, 0]);
+    var x = d3.scale.linear().range([0, width]);
+    var y = d3.scale.linear().range([height, 0]);
 
     var xAxis = d3.svg.axis()
 	.scale(x)
-	.orient("bottom");
+	.orient("bottom")
+	.tickFormat(d3.format("%"));
 
     var yAxis = d3.svg.axis()
 	.scale(y)
-	.orient("left");
+	.orient("left")
+	.tickFormat(d3.format("%"));
 
     var line = d3.svg.line()
-	.x(function(d) { return x(d.retu); })
-	.y(function(d) { return y(d.vola); });
+	.x(function(d) { return x(d.vola); })
+	.y(function(d) { return y(d.retu); });
 
     var svg = d3.select("body").append("svg")
 	.attr("width", width + margin.left + margin.right)
@@ -272,21 +259,25 @@ function main() {
 
     var data = multiple_portfolios.map(function(d) {
 	return {
-            retu: d[0],
-            vola: d[1]
+            vola: d[0],
+            retu: d[1]
 	};
 	
     });
 
     console.log(data);
 
-    x.domain(d3.extent(data, function(d) { return d.retu; }));
-    y.domain(d3.extent(data, function(d) { return d.vola; }));
+    x.domain(d3.extent(data, function(d) { return d.vola; }));
+    y.domain(d3.extent(data, function(d) { return d.retu; }));
 
     svg.append("g")
 	.attr("class", "x axis")
 	.attr("transform", "translate(0," + height + ")")
-	.call(xAxis);
+	.call(xAxis)
+	.append("text")
+	.attr("y", -6)
+	.attr("x", 800)
+	.text("Volatility (%)");
 
     svg.append("g")
 	.attr("class", "y axis")
@@ -296,7 +287,7 @@ function main() {
 	.attr("y", 6)
 	.attr("dy", ".71em")
 	.style("text-anchor", "end")
-	.text("Price ($)");
+	.text("Return (%)");
 
     svg.append("path")
 	.datum(data)
@@ -532,17 +523,17 @@ function hilo_algorithm(low, high){
 	if(companies_values[i][0] == low){
 	    companies_values[i][8] += weight;
 	    total_volatility += Math.pow(companies_values[i][8], 2) * Math.pow(companies_values[i][6], 2);
-	    console.log(companies_values[i][0] + " w: " + companies_values[i][8]);
+	    // console.log(companies_values[i][0] + " w: " + companies_values[i][8]);
 	}
 	else if(companies_values[i][0] == high){
 	    //
 	    companies_values[i][7] = false;
 	    companies_values[i][8] = 0;
-	    console.log(companies_values[i][0] + "w: " + companies_values[i][8]);
+	    // console.log(companies_values[i][0] + "w: " + companies_values[i][8]);
 	}
 	else{
 	    total_volatility += Math.pow(companies_values[i][8], 2) * Math.pow(companies_values[i][6], 2);
-	    console.log(companies_values[i][0] + "w: " + companies_values[i][8]);
+	    // console.log(companies_values[i][0] + "w: " + companies_values[i][8]);
 	}
     }
 

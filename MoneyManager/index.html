@@ -2,30 +2,13 @@
 <meta charset="utf-8">
 
 <head>
-  
-</style>
-body {
-font: 10px sans-serif;
-}
-
-.axis path,
-.axis line {
-fill: none;
-stroke: #000;
-shape-rendering: crispEdges;
-}
-
-.x.axis path {
-display: none;
-}
-
-.line {
-fill: none;
-stroke: steelblue;
-stroke-width: 1.5px;
-}
-</style>
-
+  <style>
+    path {
+    stroke: black;
+    stroke-width: 2px;
+    fill: none;
+    }
+  </style>
 </head>
 
 <body>
@@ -62,10 +45,9 @@ stroke-width: 1.5px;
     },
     slide: function( event, ui ) {
     handle.text( "AAPL: " + ui.value + "% | F: " + (100 - ui.value) + "%" );
-    var r = portfolio_return('AAPL', 'F', ui.value/100, (100-ui.value)/100);
+    var r = portfolio_return( 'AAPL', 'F', ui.value / 100, (100 - ui.value) / 100 );
     $( "#portfolioR" ).val( r );
-    var v = portfolio_volatility_2('AAPL', 'F', ui.value/100, (100-ui.value)/100);
-    console.log( v );
+    var v = portfolio_volatility_2( 'AAPL', 'F', ui.value / 100, (100 - ui.value) / 100 );
     $( "#portfolioV" ).val( v );
     }
     });
@@ -87,3 +69,5 @@ stroke-width: 1.5px;
   </p>
 
 </body>
+
+</html>
