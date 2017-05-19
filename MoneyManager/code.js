@@ -118,40 +118,13 @@ function main() {
 	document.write("</table>");
     }
 
-    //Level 2
-    //Calculate portfolio return
-    document.write("<BR>");
-    document.write("<BR>");
-    document.write("<center>LEVEL 2</center>");
-    document.write("<BR>");
-    document.write("<h1><center>Four Portfolios of Apple and Ford</h1></center>");
-    document.write("<BR><table style='width:100%' border='1'><tr><th>Portfolio</th><th>Weight of Apple</th><th>Weight of Ford</th><th>Return of Portfolio</th></tr>");
-    
-
-    //P1: 100% Apple, 0% Ford
-    document.write("<tr><td>Portfolio 1</td><td>100%</td><td>0%</td>");
-    document.write("<td>" + portfolio_return('AAPL','F',1.0,0.0).toFixed(2) + "%</td></tr>");
-
-    //P2: 50% Apple, 50% Ford
-    document.write("<tr><td>Portfolio 2</td><td>50%</td><td>50%</td>");
-    document.write("<td>" + portfolio_return('AAPL','F',0.5,0.5).toFixed(2) + "%</td></tr>");
-
-    //P3: 75% Apple, 25% Ford
-    document.write("<tr><td>Portfolio 3</td><td>75%</td><td>25%</td>");
-    document.write("<td> " + portfolio_return('AAPL','F',0.75,0.25).toFixed(2) + "%</td></tr>");
-
-    //P4: 0% Apple, 100% Ford
-    document.write("<tr><td>Portfolio 4</td><td>0%</td><td>100%</td>");
-    document.write("<td>" + portfolio_return('AAPL','F',0.0,1.0).toFixed(2) + "%</td></tr>");
-    document.write("</table><BR>");
-    document.write("<BR>");
-    document.write("<BR>");
 
      /*---------------------------------------------------------*/
     
 
     //Level 5
     //Algorithm for finding least risky portfolio for all input companies
+    document.write("<BR>");
     document.write("<center>LEVEL 5</center>");
     document.write("<BR>");
     document.write("<h1><center>Weighted Average Portfolio of All the Companies</center></h1>");
@@ -217,6 +190,37 @@ function main() {
     document.write("<BR>");
     value_print();
 
+    /*---------------------------------------------------------*/
+    
+    //Level 2
+    //Calculate portfolio return
+    document.write("<BR>");
+    document.write("<BR>");
+    document.write("<center>LEVEL 2</center>");
+    document.write("<BR>");
+    document.write("<h1><center>Four Portfolios of Apple and Ford</h1></center>");
+    document.write("<BR><table style='width:100%' border='1'><tr><th>Portfolio</th><th>Weight of Apple</th><th>Weight of Ford</th><th>Return of Portfolio</th></tr>");
+    
+
+    //P1: 100% Apple, 0% Ford
+    document.write("<tr><td>Portfolio 1</td><td>100%</td><td>0%</td>");
+    document.write("<td>" + portfolio_return('AAPL','F',1.0,0.0).toFixed(2) + "%</td></tr>");
+
+    //P2: 50% Apple, 50% Ford
+    document.write("<tr><td>Portfolio 2</td><td>50%</td><td>50%</td>");
+    document.write("<td>" + portfolio_return('AAPL','F',0.5,0.5).toFixed(2) + "%</td></tr>");
+
+    //P3: 75% Apple, 25% Ford
+    document.write("<tr><td>Portfolio 3</td><td>75%</td><td>25%</td>");
+    document.write("<td> " + portfolio_return('AAPL','F',0.75,0.25).toFixed(2) + "%</td></tr>");
+
+    //P4: 0% Apple, 100% Ford
+    document.write("<tr><td>Portfolio 4</td><td>0%</td><td>100%</td>");
+    document.write("<td>" + portfolio_return('AAPL','F',0.0,1.0).toFixed(2) + "%</td></tr>");
+    document.write("</table><BR>");
+    document.write("<BR>");
+    document.write("<BR>");
+    
     /*---------------------------------------------------------*/
     
     document.write("<BR>");
