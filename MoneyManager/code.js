@@ -211,7 +211,10 @@ function main() {
     document.write("<BR>");
     document.write("Annual volatility of portfolio: <b>" + vol.toFixed(2) + "%</b>");
     document.write("<BR>");
-    document.write("<BR>");	    
+    document.write("<BR>");
+    document.write("Return on investment of $10,000,000: <b>$" + (10000000+(ret * 100000)).toFixed(2) + "</b>");
+    document.write("<BR>");
+    document.write("<BR>");
     value_print();
 
     /*---------------------------------------------------------*/
