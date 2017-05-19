@@ -1,0 +1,32 @@
+//Credit Suisse - "Code Suisse"
+//May 18-19, 2017
+//Project 4 - "Money Manager"
+//Mentor: Matias Leone <matias.leone@credit-suisse.com>
+//Team Name: "Suisse Army Knives"
+//Jerry Dai
+//Sumin Kim
+//Mcvvina Lin
+
+
+
+//----- PROJECT 4 - MONEY MANAGER -----//
+
+//Design Decisions
+
+Our focus was to have accurate calculations. We will break down our design decisions by each level.
+
+Level 1:
+
+Using the provided JavaScript framework, we wanted a master list of all the companies in the text file that held each company's important information (eg. name, average return, volatility, etc.). This master list, called 'companies_values', is an array of arrays with each element containing a company's information. We saved each output of the formulas in README.txt to the company's entry in this master list for use in the later levels.
+
+Level 2:
+
+Realizing that levels 2-5 will require calculations of portfolio weighting for an n-number of securities, we decided to create separate functions for portfolios with equal weighting or specified weighting. For level 2, we used our two security portfolio with specified weighting function to return the four portfolios of Apple and Ford.
+
+Level 3:
+
+We used the jQuery slider to create the interactive portfolio to change the weighting of Apple and Ford. For simplicitiy, we allowed increments of 1% changes in the weights. Whenever the slider is moved, the jQuery event handler in 'index.html' saves the new percentages and runs the two security portfolio with specified weighting function.
+
+Level 4:
+
+From level 3, we saved all 101 different proportions of the two securities (101 because the percentages change from 0-100 inclusive) into an array called 'multiple_portfolios'. We convert this array to a JSON object to use d3.js to draw a line graph of volatility vs. return for each portfolio. As expected, even mixes of the securities have lower returns and volatilities (represented by the dip in the graph), while extremes have high risk (represented by the upward slopes).

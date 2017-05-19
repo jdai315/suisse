@@ -1,0 +1,47 @@
+//Credit Suisse - "Code Suisse"
+//May 18-19, 2017
+//Project 4 - "Money Manager"
+//Mentor: Matias Leone <matias.leone@credit-suisse.com>
+//Team Name: "Suisse Army Knives"
+//Jerry Dai
+//Sumin Kim
+//Mcvvina Lin
+
+
+
+//----- PROJECT 4 - MONEY MANAGER -----//
+
+//Design Decisions
+
+Our focus was to have accurate calculations. We will break down our design decisions by each level.
+
+Level 1:
+
+Using the provided JavaScript framework, we wanted a master list of all the companies in the text file that held each company's important information (eg. name, average return, volatility, etc.). This master list, called 'companies_values', is an array of arrays with each element containing a company's information. We saved each output of the formulas in README.txt to the company's entry in this master list for use in the later levels.
+
+Level 2:
+
+Realizing that levels 2-5 will require calculations of portfolio weighting for an n-number of securities, we decided to create separate functions for portfolios with equal weighting or specified weighting. For level 2, we used our two security portfolio with specified weighting function to return the four portfolios of Apple and Ford.
+
+Level 3:
+
+We used the jQuery slider to create the interactive portfolio to change the weighting of Apple and Ford. For simplicitiy, we allowed increments of 1% changes in the weights. Whenever the slider is moved, the jQuery event handler in 'index.html' saves the new percentages and runs the two security portfolio with specified weighting function.
+
+Level 4:
+
+From level 3, we saved all 101 different proportions of the two securities (101 because the percentages change from 0-100 inclusive) into an array called 'multiple_portfolios'. We convert this array to a JSON object to use d3.js to draw a line graph of volatility vs. return for each portfolio. As expected, even mixes of the securities have lower returns and volatilities (represented by the vertex of the graph), while extremes have high risk (represented by the rightward values).
+
+Level 5:
+
+The main challenge of this project was the algorithm for finding the ideal portfolio in level 5. Because the goal was for lowest risk, we decided to focus on the security with the lowest annual volatility (in this case, JNJ). For reference, we calculated the return and volatility of an equally-weighted portfolio first, using functions 'return_algorithm' and 'volatility_agorithm'. For an equally-weighted portfolio of the twenty companies, there is a return of about 19.9% and risk about 9.7%.
+
+Next, we thought we could reduce risk by putting less weight into stocks that have negative correlations to the lowest priced stock (JNJ).  This is because those stocks with negative correlations have the highest risk compared to the lowest priced stock. We did this by using the function 'correlate' which generates a list of correlation factors to all companies given a specific company. For the specific company, we use the function 'low_volatility' to pick the company with the lowest risk. Next, we use the functions 'low_array', 'low_return', and 'low_algorithm' to remove the weights of the all the companies with negative correlations to this company and distribute the weights equally to the remaining companies.
+
+To further reduce the risk of the portfolio, we created a workflow we call the "hilo". With "hilo", we take the highest risk stock of the remaining companies and transfer its weight to the lowest risk stock. The functions 'hilo_return' and 'hilo_algorithm' calculate the return and volatility of this new portfolio. We decided to repeat this 'hilo' procedure as many times with the risk decreasing and the return remaining about the required 12%. With twenty securities, 'hilo' ran twice to get a portfolio with a return of about 14.5% and volatility of about 7.5%, an improvement from the equally-weighted portfolio. This method is scalable to n-number of companies.
+
+
+Future Improvements and Conclusions
+
+Future improvements to our algorithm include a test after the 'hilo' procedure to see if increasing the weights of the lower risk half of the portfolio can decrease the volatility without going below the required return. While the risk will decrease, we were not able to test if the return will be too low. That being said, we hope that our code and design considerations can inspire new approaches to tackling the lowest risk, minimum return portfolio problem.
+
+

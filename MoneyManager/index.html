@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+  
+</style>
+body {
+font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+fill: none;
+stroke: #000;
+shape-rendering: crispEdges;
+}
+
+.x.axis path {
+display: none;
+}
+
+.line {
+fill: none;
+stroke: steelblue;
+stroke-width: 1.5px;
+}
+</style>
+
+</head>
+
+<body>
+
+  <!-- Import libraries -->
+  <script src="lib/d3.js"></script>
+  <link rel="stylesheet" href="lib/jquery-ui.min.css">
+  <link rel="stylesheet" href="lib/jquery-ui.structure.min.css">
+  <link rel="stylesheet" href="lib/jquery-ui.theme.min.css">
+  <script src="lib/jquery.js"></script>
+  <script src="lib/jquery-ui.min.js"></script>
+
+  <!-- Import code -->
+  <script src="data/data.js"></script>
+  <script src="code.js"></script>
+
+  <!-- Main code -->
+  <script>
+    main();
+  </script>
+  <style>
+    #handle {
+    width: 40mm;
+    text-align: center;
+    }
+  </style>
+
+  <script>
+    $( function() {
+    var handle = $( "#handle" );
+    $( "#slider" ).slider({
+    create: function() {
+    handle.text( "AAPL: " + $( this ).slider( "value" ) + " | F: 100%" );
+    },
+    slide: function( event, ui ) {
+    handle.text( "AAPL: " + ui.value + "% | F: " + (100 - ui.value) + "%" );
+    var r = portfolio_return('AAPL', 'F', ui.value/100, (100-ui.value)/100);
+    $( "#portfolioR" ).val( r );
+    var v = portfolio_volatility_2('AAPL', 'F', ui.value/100, (100-ui.value)/100);
+    console.log( v );
+    $( "#portfolioV" ).val( v );
+    }
+    });
+    } );
+  </script>
+
+  <div id="slider" style="margin-right:40mm">
+    <div id="handle" class="ui-slider-handle"></div>
+  </div>
+
+  <p>
+    <label for="portfolioR">Portfolio Average Return:</label>
+    <input type="text" id="portfolioR">%
+  </p>
+
+  <p>
+    <label for="portfolioV">Portfolio Average Volatility:</label>
+    <input type="text" id="portfolioV">%
+  </p>
+
+</body>
